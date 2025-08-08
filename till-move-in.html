@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Days Till We Move In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Varta:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to match the poster theme with a cutesy touch */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0ebe5; /* The soft, warm cream background */
+            animation: fadeIn 0.5s ease-in-out;
+            display: flex;
+            align-items: flex-start; /* Align content to the top */
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* Keyframe animation for the fade-in effect */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .main-container {
+            /* The main content area with the lighter cream background */
+            background-color: #faf8f5;
+            font-family: 'Varta', sans-serif;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 800px;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            border-radius: 1.5rem; /* Softer, more rounded corners */
+        }
+        
+        .nameplate {
+            /* Wooden texture using a gradient and a subtle pattern */
+            background: 
+                linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+                url('https://www.transparenttextures.com/patterns/wood-pattern.png'),
+                linear-gradient(135deg, #8B4513, #A0522D); /* SaddleBrown to Sienna gradient */
+            padding: 1.5rem 2rem;
+            border-radius: 0.75rem; /* Slightly less rounded for a more 'cut' look */
+            margin-bottom: 3rem;
+            border: 2px solid #654321; /* Darker, solid border */
+            box-shadow: 0 8px 15px -5px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.1);
+        }
+        
+        .nameplate h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #faf8f5; /* Changed to off-white for contrast */
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4); /* Stronger shadow */
+        }
+
+        .nameplate p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #f0ebe5; /* Changed to a lighter cream for contrast */
+            margin-top: 0.25rem;
+            opacity: 0.9;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1rem; /* Reduced margin */
+        }
+
+        .countdown-card {
+            background-color: #f0ebe5;
+            padding: 1.5rem 1rem;
+            border-radius: 1rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.04);
+        }
+
+        .countdown-card:hover {
+            transform: translateY(-5px);
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.04), 0 5px 20px -5px rgba(0,0,0,0.07);
+        }
+
+        .countdown-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #111;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+
+        .total-days-display {
+            margin-bottom: 3rem;
+            font-family: 'Varta', sans-serif;
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        .total-days-display strong {
+            color: #8B4513;
+            font-weight: 700;
+        }
+        
+        .progress-section {
+            position: relative;
+            padding-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .progress-section::before {
+            content: '· · · · · · · · · · · · · · · · · · · ·';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #e5ddd5;
+            font-size: 1.5rem;
+            letter-spacing: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .progress-title {
+            font-family: 'Varta', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-track {
+            width: 100%;
+            height: 20px;
+            background-color: #f0ebe5;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e5ddd5;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e5a9a9, #d18c8c);
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1rem;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .celebration {
+             display: none;
+        }
+        
+        .celebration.show {
+            display: block;
+            text-align: center;
+        }
+        
+        .celebration h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #e5a9a9;
+        }
+
+        .back-button {
+            font-family: 'Inter', sans-serif;
+            color: #888;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            color: #111;
+        }
+
+        @media (max-width: 768px) {
+            .countdown-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .countdown-number {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .countdown-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+             .main-container {
+                padding: 1.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <header class="nameplate">
+            <h1>The Srushti & Varun Residence</h1>
+            <!-- <p>Our Next Chapter</p> -->
+        </header>
+
+        <section id="countdown-content">
+            <div class="countdown-grid" id="countdownGrid">
+                <!-- Countdown cards will be inserted here -->
+            </div>
+            <div class="total-days-display" id="totalDaysDisplay">
+                <!-- Total days will be inserted here -->
+            </div>
+
+            <div class="progress-section">
+                <h3 class="progress-title">The Progress to the Day We Move In</h3>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressBar">
+                        <span id="progressText">0%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="celebration" id="celebration">
+            <h2>🎉 Welcome Home! 🎉</h2>
+            <p>Today's the day you start your new chapter together!</p>
+            <div style="font-size: 3rem; margin-top: 1rem;">🏡❤️🔑</div>
+        </div>
+
+        <a href="index.html" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Home</span>
+        </a>
+    </div>
+
+    <script>
+        // Set the countdown for 736 days from today.
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Set to midnight for a clean day count
+
+        // The start date for the progress bar is today
+        const startDate = new Date(today); 
+
+        // The target date is 736 days in the future
+        const targetDate = new Date(today);
+        targetDate.setDate(today.getDate() + 736);
+
+        function updateCountdown() {
+            const now = new Date();
+            let diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('celebration').classList.add('show');
+                document.getElementById('countdown-content').style.display = 'none';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const months = Math.floor(days / 30.4375);
+            const years = Math.floor(months / 12);
+
+            const daysLeft = days % 30;
+            const monthsLeft = months % 12;
+
+            const countdownHTML = `
+                <div class="countdown-card">
+                    <span class="countdown-number">${String(years).padStart(2, '0')}</span>
+                    <span class="countdown-label">Years</span>
+                </div>
+                <div class="countdown-card">
+                    <span class="countdown-number">${String(monthsLeft).padStart(2, '0')}</span>
+                    <span class="countdown-label">Months</span>
+                </div>
+                <div class="countdown-card">
+                    <span class="countdown-number">${String(daysLeft).padStart(2, '0')}</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+            `;
+            document.getElementById('countdownGrid').innerHTML = countdownHTML;
+            
+            // Update the total days display
+            const totalDaysHTML = `(Only <strong>${days}</strong> days to go!)`;
+            document.getElementById('totalDaysDisplay').innerHTML = totalDaysHTML;
+
+
+            const totalJourneyTime = targetDate - startDate;
+            const elapsedTime = now - startDate;
+            const progressPercent = Math.min((elapsedTime / totalJourneyTime) * 100, 100);
+            
+            document.getElementById('progressBar').style.width = progressPercent + '%';
+            document.getElementById('progressText').textContent = Math.round(progressPercent) + '%';
+        }
+
+        updateCountdown();
+        // Set interval to check roughly every second for the most accurate display, especially if you were showing smaller units
+        setInterval(updateCountdown, 1000); 
+    </script>
+</body>
+</html>

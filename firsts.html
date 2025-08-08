@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best Moments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Varta:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to supplement Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Inverted color scheme: cream background */
+            background-color: #f0ebe5;
+            /* Added fade-in animation */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Keyframe animation for the fade-in effect */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .player-shadow {
+            box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .progress-handle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translate(50%, -50%);
+            width: 14px;
+            height: 14px;
+            background-color: #f0ebe5; /* Match light background */
+            border-radius: 9999px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            color: #888;
+            background-color: rgba(255,255,255,0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            color: #111;
+            background-color: rgba(255,255,255,0.8);
+        }
+
+    </style>
+</head>
+<body class="text-black flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
+
+    <a href="index.html" class="back-button">← Home</a>
+
+    <!-- Main Player Card -->
+    <main class="bg-gray-900 text-white rounded-2xl p-6 w-full max-w-sm player-shadow border border-black/5">
+        <!-- Album Art / Moment Image -->
+        <div class="aspect-square mb-6">
+            <img 
+                id="momentImage"
+                src="https://placehold.co/400x400/cccccc/000000?text=First+Date" 
+                alt="Our Best Moment" 
+                class="w-full h-full object-cover rounded-lg shadow-md"
+            >
+        </div>
+
+        <!-- Song Info / Moment Details -->
+        <div class="text-center mb-6">
+            <h1 id="momentTitle" class="text-2xl font-bold text-gray-100">Our First Date</h1>
+            <p id="momentDescription" class="text-gray-400 font-medium h-10"></p>
+            <p id="momentDate" class="text-gray-400 text-base font-mono mt-2"></p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mb-4">
+            <div class="bg-gray-700 rounded-full h-1 w-full">
+                <div id="progressBar" class="bg-gray-200 h-1 rounded-full relative progress-handle"></div>
+            </div>
+            <div class="flex justify-between text-xs font-mono text-gray-500 mt-1.5">
+                <span id="trackNumber">1</span>
+                <span id="totalTracks">/ 3</span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center space-x-6 text-gray-200">
+            <!-- Shuffle Icon (decorative) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-gray-500"><path d="m16 3 3 3-3 3"/><path d="M4 20V4h15"/><path d="m21 16-3 3-3-3"/><path d="M4 4v7h15"/></svg>
+            
+            <!-- Previous Button -->
+            <button id="prevButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 hover:text-white transition-colors"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+            </button>
+
+            <!-- Play/Pause Button (decorative) -->
+            <div class="bg-gray-200 text-gray-900 rounded-full w-16 h-16 flex items-center justify-center shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            </div>
+
+            <!-- Next Button -->
+            <button id="nextButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 hover:text-white transition-colors"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+            </button>
+
+            <!-- Repeat Icon (decorative) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-gray-500"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+        </div>
+    </main>
+
+    <script>
+        // --- Your Best Moments ---
+        // Add your moments here. You can add as many as you want.
+        // Just make sure the image paths are correct.
+        const moments = [
+            {
+                title: "The First time We Spoke",
+                description: "Who Can Forget That Eye-Contact<br>(Never Felt More Patriotic ikyk)",
+                date: "30th August 2024",
+                image: "stare.png"
+            },
+            {
+                title: "That Day at IMDR",
+                description: "The Day You Came And Spoke To Me<br>Best Seminar I've Attended",
+                date: "20th September 2024",
+                image: "imdr.png"
+            },
+            {
+                title: "Wadeshwar(Our first date?)",
+                description: "You Yapping, Me Listening<br>Who Knew That Would Continue To This Day:)",
+                date: "11th October 2024",
+                image: "date.png"
+            },
+            {
+                title: "First Time We Kissed",
+                description: "Marathi Movie, Maggi, Cookies and Kissing<br>Best Day Ever!!!!",
+                date: "16th November 2024",
+                image: "k.png"
+            },
+            {
+                title: "That Evening Walk",
+                description: "The First Time You Held My Hands<br>An Evening We'll Never Forget",
+                date: "17th November 2024",
+                image: "walk.png"
+            },
+            {
+                title: "That Day I Asked You Out Officially",
+                description: "You Made Me Do It Twice Because The First One Wasn't Good ",
+                date: "4th January 2025",
+                image: "idk.png"
+            }
+        ];
+
+        let currentMomentIndex = 0;
+
+        // Get elements from the DOM
+        const momentImage = document.getElementById('momentImage');
+        const momentTitle = document.getElementById('momentTitle');
+        const momentDescription = document.getElementById('momentDescription');
+        const momentDate = document.getElementById('momentDate');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const progressBar = document.getElementById('progressBar');
+        const trackNumber = document.getElementById('trackNumber');
+        const totalTracks = document.getElementById('totalTracks');
+        
+        // Function to update the player with the current moment
+        function displayMoment() {
+            const moment = moments[currentMomentIndex];
+            momentImage.src = moment.image;
+            momentTitle.textContent = moment.title;
+            momentDescription.innerHTML = moment.description; // Use .innerHTML to render the <br> tag
+            momentDate.textContent = moment.date;
+            
+            // Update progress bar and track numbers
+            const progressPercentage = ((currentMomentIndex + 1) / moments.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            trackNumber.textContent = currentMomentIndex + 1;
+            totalTracks.textContent = `/ ${moments.length}`;
+        }
+
+        // Event listener for the "Next" button
+        nextButton.addEventListener('click', () => {
+            currentMomentIndex++;
+            if (currentMomentIndex >= moments.length) {
+                currentMomentIndex = 0; // Loop back to the beginning
+            }
+            displayMoment();
+        });
+
+        // Event listener for the "Previous" button
+        prevButton.addEventListener('click', () => {
+            currentMomentIndex--;
+            if (currentMomentIndex < 0) {
+                currentMomentIndex = moments.length - 1; // Loop to the end
+            }
+            displayMoment();
+        });
+
+        // Initial display
+        displayMoment();
+
+    </script>
+</body>
+</html>

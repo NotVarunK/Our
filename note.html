@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Note For You</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Varta:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to match the poster theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEF2F2; /* Warmer, more noticeable pink background */
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .main-container {
+            background-color: #ffffff; /* Brighter container for contrast */
+            font-family: 'Varta', sans-serif;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            border-radius: 1.5rem;
+        }
+        
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-family: 'Varta', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            font-size: 2.5rem;
+            color: #111;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #F472B6; /* Brighter pink */
+            border-radius: 2px;
+        }
+        
+        .header-icon {
+            color: #F472B6; /* Brighter pink */
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .note-form {
+            margin-bottom: 3rem;
+        }
+
+        .note-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 1px solid #FECDD3; /* Pinkish border */
+            background-color: #FEF2F2; /* Match page background */
+            font-family: 'Varta', sans-serif;
+            font-size: 1.1rem;
+            color: #333;
+            resize: vertical;
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.04);
+        }
+
+        .note-input:focus {
+            outline: none;
+            border-color: #F472B6;
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.04), 0 0 0 2px #F472B6;
+        }
+
+        .submit-button {
+            margin-top: 1rem;
+            background-color: #EC4899; /* Pinkish-red button */
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 99px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submit-button:hover {
+            background-color: #DB2777;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px -5px rgba(0,0,0,0.2);
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem; /* Increased gap */
+            text-align: left;
+        }
+
+        .note-card {
+            background-color: #FFF;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+        
+        .note-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 25px;
+            background-image: linear-gradient(45deg, rgba(244, 114, 182, 0.4) 25%, transparent 25%, transparent 50%, rgba(244, 114, 182, 0.4) 50%, rgba(244, 114, 182, 0.4) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+            border-left: 1px dashed rgba(0,0,0,0.1);
+            border-right: 1px dashed rgba(0,0,0,0.1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .note-card:hover {
+            transform: scale(1.03) rotate(0deg) !important; /* Override inline style for rotation on hover */
+        }
+
+        .note-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #333;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            white-space: pre-wrap; /* Preserves line breaks */
+        }
+
+        .note-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        .back-button {
+            font-family: 'Inter', sans-serif;
+            color: #888;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .back-button:hover {
+            color: #111;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1>
+                <svg class="header-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.13,5.12L18.88,8.87M3,17.25V21H6.75L17.81,9.94L14.06,6.19L3,17.25Z" />
+                </svg>
+                A Note For You
+            </h1>
+            <p class="subtitle">Leave a little message for later</p>
+        </header>
+
+        <section class="note-form">
+            <textarea id="noteInput" class="note-input" placeholder="Write something sweet..."></textarea>
+            <button id="submitNote" class="submit-button">
+                <span>Leave a Note</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+        </section>
+
+        <div class="notes-grid" id="notesGrid">
+            <!-- Notes will be loaded here -->
+        </div>
+
+        <a href="index.html" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Home</span>
+        </a>
+    </div>
+
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- Firebase Configuration ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "...", authDomain: "...", projectId: "..." };
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // --- Initialize Firebase ---
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- DOM Elements ---
+        const noteInput = document.getElementById('noteInput');
+        const submitButton = document.getElementById('submitNote');
+        const notesGrid = document.getElementById('notesGrid');
+
+        // --- Firestore Collection Reference ---
+        const notesCollection = collection(db, `artifacts/${appId}/public/data/notes`);
+
+        // --- Functions ---
+
+        // Function to display notes on the page
+        function displayNotes(notes) {
+            notesGrid.innerHTML = ''; // Clear existing notes
+            notes.forEach(note => {
+                const noteCard = document.createElement('div');
+                noteCard.className = 'note-card';
+                // Apply a random rotation for the scrapbook effect
+                const rotation = (Math.random() - 0.5) * 4; // Random angle between -2 and 2 degrees
+                noteCard.style.transform = `rotate(${rotation}deg)`;
+
+                const message = document.createElement('p');
+                message.className = 'note-message';
+                message.textContent = note.message;
+
+                const date = document.createElement('p');
+                date.className = 'note-date';
+                date.textContent = new Date(note.timestamp).toLocaleString();
+
+                noteCard.appendChild(message);
+                noteCard.appendChild(date);
+                notesGrid.appendChild(noteCard); 
+            });
+        }
+
+        // Function to save a new note
+        async function saveNote() {
+            const message = noteInput.value.trim();
+            if (message === '') return; // Don't save empty notes
+
+            try {
+                await addDoc(notesCollection, {
+                    message: message,
+                    timestamp: Date.now()
+                });
+                noteInput.value = ''; // Clear the input
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            }
+        }
+
+        // --- Main Logic ---
+        async function main() {
+            // Sign in the user
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Authentication error:", error);
+            }
+            
+            // Listen for real-time updates to the notes collection
+            const q = query(notesCollection); // Removed the orderBy clause
+            onSnapshot(q, (snapshot) => {
+                const notes = snapshot.docs.map(doc => doc.data());
+                // Sort the notes by timestamp in the browser (newest first)
+                notes.sort((a, b) => b.timestamp - a.timestamp);
+                displayNotes(notes);
+            });
+
+            // Add event listener to the submit button
+            submitButton.addEventListener('click', saveNote);
+        }
+
+        main();
+    </script>
+</body>
+</html>
