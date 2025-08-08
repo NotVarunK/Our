@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Srushti's Love Story (ft. Varun)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Varta:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to supplement Tailwind */
+        body {
+            /* Sets the overall background color and font for the page */
+            font-family: 'Inter', sans-serif;
+            background-color: #f0ebe5; /* A soft, warm cream color */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        /* Keyframe animation for the fade-in effect */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .poster-container {
+            /* This is the main white poster area */
+            background-color: #faf8f5;
+            font-family: 'Varta', sans-serif; /* A font similar to the one on the poster */
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .title-font {
+            /* Specific styling for the main title to mimic "blond" */
+            font-family: 'Varta', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.05em; /* Tightens up the letter spacing */
+        }
+
+        .track-list {
+            /* Creates the two-column layout for the track list */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.25rem 2rem; /* Row and column gap */
+            font-size: 0.8rem;
+            color: #4a4a4a;
+            font-weight: 500;
+        }
+
+        .track-list a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s ease-in-out;
+            padding: 2px 0;
+        }
+
+        .track-list a:hover {
+            color: #000;
+        }
+
+        .footer-text {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+        }
+
+        .advisory-sticker {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background-color: #faf8f5;
+            color: #111;
+            padding: 0.5rem 0.8rem;
+            font-family: 'Archivo Black', sans-serif; /* Bold, condensed font */
+            text-align: center;
+            border: 2px solid #111; /* Thicker border */
+        }
+
+        .advisory-sticker .main {
+            font-size: 0.85rem;
+            line-height: 1;
+            letter-spacing: -0.075em; /* Very tight letter spacing */
+        }
+
+        .advisory-sticker .sub {
+            font-size: 0.55rem;
+            line-height: 1;
+            letter-spacing: 0.01em;
+            font-family: 'Varta', sans-serif; /* Use a simpler font for subtext */
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .color-swatches .swatch {
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
+
+    <!-- Main Poster Container -->
+    <main class="poster-container w-full max-w-md p-6 sm:p-8">
+        
+        <!-- Header Title -->
+        <header class="text-center mb-6">
+            <h1 class="title-font text-3xl sm:text-4xl text-black">Srushti's Love Story</h1>
+            <h5 class="title-font text-1xl sm:text-2xl text-black">( ft. Varun )</h5>
+        </header>
+
+        <!-- Main Image -->
+        <div class="relative aspect-square mb-6">
+            <img 
+                src="sc.jpg" 
+                alt="A happy couple" 
+                class="w-full h-full object-cover"
+                onerror="this.onerror=null;this.src='sc.jpg';"
+            >
+            <div class="advisory-sticker">
+                <div class="main">LOVE ADVISORY</div>
+                <div class="sub">ROMANTIC CONTENT</div>
+            </div>
+        </div>
+
+        <!-- Track List Section -->
+        <section class="mb-8">
+            <div class="track-list">
+                <a href="since-met.html">1. Time Together</a>
+                <a href="till-move-in.html">2. Moving In</a>
+                <a href="firsts.html">3. All Our Firsts</a>
+                <!-- <a href="note.html">4. Notes for Each Other</a> -->
+                <!-- You can add more links here and they will continue in columns -->
+            </div>
+        </section>
+
+        <!-- Footer Area -->
+        <div class="flex justify-between items-end">
+            <!-- Color Swatches -->
+            <div class="color-swatches">
+                <div class="swatch" style="background-color: #333333;"></div>
+                <div class="swatch" style="background-color: #d1bfa7;"></div>
+                <div class="swatch" style="background-color: #b06a6a;"></div>
+                <div class="swatch" style="background-color: #e1dcd5;"></div>
+            </div>
+
+            <!-- Footer Info -->
+            <footer class="text-right space-y-1">
+                <p class="font-bold text-sm text-black">OUR LOVE STORY</p>
+                <p class="footer-text">OUT NOW / SINCE NOVEMBER 16, 2024</p>
+                <p class="footer-text">THE DEBUT STORY ALBUM</p>
+                <p class="footer-text">RELEASED BY SRUSHTI AND CO.</p>
+            </footer>
+        </div>
+
+    </main>
+
+</body>
+</html>
